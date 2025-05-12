@@ -25,10 +25,16 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Content="{x:Static p:Resources.MainView_ResetButton_Content}" Visibility="{Binding Path=ResetButtonVisible, Converter={StaticResource b2v}}"/>
-        <Button Content="{x:Static p:Resources.MainView_StartButton_Content}" Grid.Column="1" Visibility="{Binding Path=StartButtonVisible, Converter={StaticResource b2v}}"/>
+        <TextBlock Text="{Binding CurrentTime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding RunningStopTime}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ScrollViewer Grid.Column="2">
+            <TextBlock Text="{Binding SplitTimes}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </ScrollViewer>
+        <TextBlock Text="{Binding FinalStopTime}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Button Content="{x:Static p:Resources.MainView_ResetButton_Content}" Grid.Row="1" Visibility="{Binding Path=ResetButtonVisible, Converter={StaticResource b2v}}"/>
+        <Button Content="{x:Static p:Resources.MainView_StartButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=StartButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StartStopProcessCommand}"/>
         <Button Content="{x:Static p:Resources.MainView_PauseButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=PauseButtonVisible, Converter={StaticResource b2v}}"/>
-        <Button Content="{x:Static p:Resources.MainView_SplitTimeButton_Content}" Grid.Column="2" Visibility="{Binding Path=SplitTimeButtonVisible, Converter={StaticResource b2v}}"/>
-        <Button Content="{x:Static p:Resources.MainView_StopButton_Content}" Grid.Column="3" Visibility="{Binding Path=StopButtonVisible, Converter={StaticResource b2v}}"/>
+        <Button Content="{x:Static p:Resources.MainView_SplitTimeButton_Content}" Grid.Column="2" Grid.Row="1" Visibility="{Binding Path=SplitTimeButtonVisible, Converter={StaticResource b2v}}"/>
+        <Button Content="{x:Static p:Resources.MainView_StopButton_Content}" Grid.Column="3" Grid.Row="1" Visibility="{Binding Path=StopButtonVisible, Converter={StaticResource b2v}}"/>
     </Grid>
 </UserControl>
