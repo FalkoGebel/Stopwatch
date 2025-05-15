@@ -10,9 +10,14 @@ namespace StopwatchUiWpf.ViewModels
         private DispatcherTimer? _dispatcherTimerRunningStopTime;
         private DateTime _startTime;
         private DateTime _currentRunningStopTime;
+        private DateTime _currentSplitStartTime;
+        private TimeSpan _currentStopTime;
+        private TimeSpan _currentSplitTime;
+        private List<(TimeSpan, TimeSpan)> _splitTimesList;
 
         public MainViewModel()
         {
+            _splitTimesList = [];
             StartButtonVisible = true;
 
             UpdateCurrentTime();
@@ -49,20 +54,66 @@ namespace StopwatchUiWpf.ViewModels
         [RelayCommand]
         public void StartStopProcess()
         {
-            _startTime = DateTime.Now;
             StartDispatcherTimerRunningStopTime();
 
             StartButtonVisible = false;
             PauseButtonVisible = true;
             SplitTimeButtonVisible = true;
             StopButtonVisible = true;
+            ResetButtonVisible = false;
+        }
+
+        [RelayCommand]
+        public void PauseStopProcess()
+        {
+            if (_dispatcherTimerRunningStopTime == null)
+                return;
+
+            _dispatcherTimerRunningStopTime.Stop();
+            StartButtonVisible = true;
+            PauseButtonVisible = false;
+            SplitTimeButtonVisible = false;
+            StopButtonVisible = false;
+            ResetButtonVisible = true;
+        }
+
+        [RelayCommand]
+        public void StopStopProcess()
+        {
+            if (_dispatcherTimerRunningStopTime == null)
+                return;
+
+            _dispatcherTimerRunningStopTime.Stop();
+            _dispatcherTimerRunningStopTime = null;
+            FinalStopTime = _currentStopTime.ToString(@"hh\:mm\:ss\.fff");
+        }
+
+        [RelayCommand]
+        public void StopSplitTime()
+        {
+            if (_dispatcherTimerRunningStopTime == null)
+                return;
+
+            _splitTimesList.Add((_currentSplitTime, _currentStopTime));
+            _currentSplitStartTime = DateTime.Now;
+            SplitTimes = string.Join('\n', _splitTimesList.Select((t, i) => $"{i + 1}  {t.Item1:hh\\:mm\\:ss\\.fff}  {t.Item2:hh\\:mm\\:ss\\.fff}"));
         }
 
         private void StartDispatcherTimerRunningStopTime()
         {
-            _dispatcherTimerRunningStopTime = new DispatcherTimer();
-            _dispatcherTimerRunningStopTime.Tick += UpdateRunningStopTimeTick;
-            _dispatcherTimerRunningStopTime.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            if (_dispatcherTimerRunningStopTime == null)
+            {
+                _startTime = DateTime.Now;
+                _dispatcherTimerRunningStopTime = new DispatcherTimer();
+                _dispatcherTimerRunningStopTime.Tick += UpdateRunningStopTimeTick;
+                _dispatcherTimerRunningStopTime.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            }
+            else
+            {
+                _startTime = DateTime.Now - _currentStopTime;
+            }
+
+            _currentSplitStartTime = _startTime;
             _dispatcherTimerRunningStopTime.Start();
         }
 
@@ -89,8 +140,9 @@ namespace StopwatchUiWpf.ViewModels
         private void UpdateRunningStopTime()
         {
             _currentRunningStopTime = DateTime.Now;
-            TimeSpan ts = _currentRunningStopTime - _startTime;
-            RunningStopTime = ts.ToString(@"hh\:mm\:ss\.fff");
+            _currentStopTime = _currentRunningStopTime - _startTime;
+            _currentSplitTime = _currentRunningStopTime - _currentSplitStartTime;
+            RunningStopTime = _currentStopTime.ToString(@"hh\:mm\:ss\.fff");
         }
     }
 }
