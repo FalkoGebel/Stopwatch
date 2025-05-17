@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:StopwatchUiWpf.Views"
         xmlns:p="clr-namespace:StopwatchUiWpf.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.MainWindow_Title}" Height="450" Width="800">
+        Title="{x:Static p:Resources.MainWindow_Title}" SizeToContent="WidthAndHeight">
     <Grid>
         <views:MainView />
     </Grid>

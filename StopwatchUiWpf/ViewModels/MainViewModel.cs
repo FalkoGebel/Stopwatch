@@ -6,35 +6,25 @@ namespace StopwatchUiWpf.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private DispatcherTimer? _dispatcherTimerCurrentTime;
         private DispatcherTimer? _dispatcherTimerRunningStopTime;
         private DateTime _startTime;
         private DateTime _currentRunningStopTime;
         private DateTime _currentSplitStartTime;
         private TimeSpan _currentStopTime;
         private TimeSpan _currentSplitTime;
-        private List<(TimeSpan, TimeSpan)> _splitTimesList;
+        private readonly List<(TimeSpan, TimeSpan)> _splitTimesList;
 
         public MainViewModel()
         {
             _splitTimesList = [];
             StartButtonVisible = true;
-
-            UpdateCurrentTime();
-            StartDispatcherTimerCurrentTime();
         }
-
-        [ObservableProperty]
-        private string _currentTime = string.Empty;
 
         [ObservableProperty]
         private string _runningStopTime = string.Empty;
 
         [ObservableProperty]
         private string _splitTimes = string.Empty;
-
-        [ObservableProperty]
-        private string _finalStopTime = string.Empty;
 
         [ObservableProperty]
         private bool _resetButtonVisible;
@@ -48,9 +38,6 @@ namespace StopwatchUiWpf.ViewModels
         [ObservableProperty]
         private bool _splitTimeButtonVisible;
 
-        [ObservableProperty]
-        private bool _stopButtonVisible;
-
         [RelayCommand]
         public void StartStopProcess()
         {
@@ -59,7 +46,6 @@ namespace StopwatchUiWpf.ViewModels
             StartButtonVisible = false;
             PauseButtonVisible = true;
             SplitTimeButtonVisible = true;
-            StopButtonVisible = true;
             ResetButtonVisible = false;
         }
 
@@ -73,19 +59,7 @@ namespace StopwatchUiWpf.ViewModels
             StartButtonVisible = true;
             PauseButtonVisible = false;
             SplitTimeButtonVisible = false;
-            StopButtonVisible = false;
             ResetButtonVisible = true;
-        }
-
-        [RelayCommand]
-        public void StopStopProcess()
-        {
-            if (_dispatcherTimerRunningStopTime == null)
-                return;
-
-            _dispatcherTimerRunningStopTime.Stop();
-            _dispatcherTimerRunningStopTime = null;
-            FinalStopTime = _currentStopTime.ToString(@"hh\:mm\:ss\.fff");
         }
 
         [RelayCommand]
@@ -96,7 +70,22 @@ namespace StopwatchUiWpf.ViewModels
 
             _splitTimesList.Add((_currentSplitTime, _currentStopTime));
             _currentSplitStartTime = DateTime.Now;
-            SplitTimes = string.Join('\n', _splitTimesList.Select((t, i) => $"{i + 1}  {t.Item1:hh\\:mm\\:ss\\.fff}  {t.Item2:hh\\:mm\\:ss\\.fff}"));
+            TimeSpan benchmarkSplitTime = _splitTimesList.OrderBy(t => t.Item1).ToList()[^1].Item1,
+                     benchmarkWholeTime = _splitTimesList[^1].Item2;
+            int numberWidth = _splitTimesList.Count.ToString().Length;
+            SplitTimes = string.Join('\n', _splitTimesList.Select((t, i) => $"{(i + 1).ToString().PadLeft(numberWidth, '0')}  {FormatTimeSpan(t.Item1, benchmarkSplitTime)}  {FormatTimeSpan(t.Item2, benchmarkWholeTime)}"));
+        }
+
+        [RelayCommand]
+        public void Reset()
+        {
+            RunningStopTime = string.Empty;
+            _splitTimesList.Clear();
+            SplitTimes = string.Empty;
+            StartButtonVisible = true;
+            PauseButtonVisible = false;
+            SplitTimeButtonVisible = false;
+            ResetButtonVisible = false;
         }
 
         private void StartDispatcherTimerRunningStopTime()
@@ -117,24 +106,6 @@ namespace StopwatchUiWpf.ViewModels
             _dispatcherTimerRunningStopTime.Start();
         }
 
-        private void StartDispatcherTimerCurrentTime()
-        {
-            _dispatcherTimerCurrentTime = new DispatcherTimer();
-            _dispatcherTimerCurrentTime.Tick += UpdateCurrentTimeTick;
-            _dispatcherTimerCurrentTime.Interval = new TimeSpan(0, 0, 1);
-            _dispatcherTimerCurrentTime.Start();
-        }
-
-        private void UpdateCurrentTimeTick(object? sender, object e) => UpdateCurrentTime();
-
-        private void UpdateCurrentTime()
-        {
-            DateTime now = DateTime.Now;
-            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
-
-            CurrentTime = now.ToString("T");
-        }
-
         private void UpdateRunningStopTimeTick(object? sender, object e) => UpdateRunningStopTime();
 
         private void UpdateRunningStopTime()
@@ -142,7 +113,46 @@ namespace StopwatchUiWpf.ViewModels
             _currentRunningStopTime = DateTime.Now;
             _currentStopTime = _currentRunningStopTime - _startTime;
             _currentSplitTime = _currentRunningStopTime - _currentSplitStartTime;
-            RunningStopTime = _currentStopTime.ToString(@"hh\:mm\:ss\.fff");
+            RunningStopTime = FormatTimeSpan(_currentStopTime, _currentStopTime);
+        }
+
+        private static string FormatTimeSpan(TimeSpan ts, TimeSpan? benchmark)
+        {
+            TimeSpan check = benchmark == null ? ts : benchmark.Value;
+
+            if (check.Days > 0)
+            {
+                if (check.Days > 9)
+                    return ts.ToString(@"dd:\hh\:mm\:ss\.fff");
+
+                return ts.ToString(@"d:\hh\:mm\:ss\.fff");
+            }
+
+            if (check.Hours > 0)
+            {
+                if (check.Hours > 9)
+                    return ts.ToString(@"hh\:mm\:ss\.fff");
+
+                return ts.ToString(@"h\:mm\:ss\.fff");
+            }
+
+            if (check.Minutes > 0)
+            {
+                if (check.Minutes > 9)
+                    return ts.ToString(@"mm\:ss\.fff");
+
+                return ts.ToString(@"m\:ss\.fff");
+            }
+
+            if (check.Seconds > 0)
+            {
+                if (check.Seconds > 9)
+                    return ts.ToString(@"ss\.fff");
+
+                return ts.ToString(@"s\.fff");
+            }
+
+            return ts.ToString(@"s\.fff");
         }
     }
 }
