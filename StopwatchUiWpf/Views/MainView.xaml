@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:StopwatchUiWpf.ViewModels"
              xmlns:p="clr-namespace:StopwatchUiWpf.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="10,10,10,10" MinWidth="480">
     <UserControl.DataContext>
         <viewModels:MainViewModel />
     </UserControl.DataContext>
@@ -17,24 +17,26 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding CurrentTime}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding RunningStopTime}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <ScrollViewer Grid.Column="2">
-            <TextBlock Text="{Binding SplitTimes}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid Margin="5,5,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="{x:Static p:Resources.MainView_ResetButton_Content}" Grid.Column="0" Visibility="{Binding Path=ResetButtonVisible, Converter={StaticResource b2v}}" Command="{Binding ResetCommand}" FontSize="14"/>
+            <Button Content="{x:Static p:Resources.MainView_StartButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=StartButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StartStopProcessCommand}" FontSize="14"/>
+            <Button Content="{x:Static p:Resources.MainView_PauseButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=PauseButtonVisible, Converter={StaticResource b2v}}" Command="{Binding PauseStopProcessCommand}" FontSize="14"/>
+            <Button Content="{x:Static p:Resources.MainView_SplitTimeButton_Content}" Grid.Column="2" Grid.Row="1" Visibility="{Binding Path=SplitTimeButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StopSplitTimeCommand}" FontSize="14"/>
+        </Grid>
+        <TextBlock Text="{Binding RunningStopTime}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="100" Padding="5,5,5,5" FontSize="14"/>
+        <ScrollViewer Grid.Column="0" Grid.Row="2" MinWidth="100" MinHeight="300" MaxHeight="300" Padding="5,5,5,5" HorizontalContentAlignment="Center">
+            <TextBlock Text="{Binding SplitTimes}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="14"/>
         </ScrollViewer>
-        <TextBlock Text="{Binding FinalStopTime}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Button Content="{x:Static p:Resources.MainView_ResetButton_Content}" Grid.Row="1" Visibility="{Binding Path=ResetButtonVisible, Converter={StaticResource b2v}}"/>
-        <Button Content="{x:Static p:Resources.MainView_StartButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=StartButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StartStopProcessCommand}"/>
-        <Button Content="{x:Static p:Resources.MainView_PauseButton_Content}" Grid.Column="1" Grid.Row="1" Visibility="{Binding Path=PauseButtonVisible, Converter={StaticResource b2v}}" Command="{Binding PauseStopProcessCommand}"/>
-        <Button Content="{x:Static p:Resources.MainView_SplitTimeButton_Content}" Grid.Column="2" Grid.Row="1" Visibility="{Binding Path=SplitTimeButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StopSplitTimeCommand}"/>
-        <Button Content="{x:Static p:Resources.MainView_StopButton_Content}" Grid.Column="3" Grid.Row="1" Visibility="{Binding Path=StopButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StopStopProcessCommand}"/>
     </Grid>
 </UserControl>
