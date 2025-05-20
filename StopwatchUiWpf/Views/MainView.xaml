@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:StopwatchUiWpf.ViewModels"
              xmlns:p="clr-namespace:StopwatchUiWpf.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="10,10,10,10" MinWidth="480">
+             d:DesignHeight="450" d:DesignWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="10,10,10,10" MinWidth="300" MinHeight="300" MaxHeight="300">
     <UserControl.DataContext>
         <viewModels:MainViewModel />
     </UserControl.DataContext>
@@ -19,9 +19,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
             <Button Content="{x:Static p:Resources.MainView_SplitTimeButton_Content}" Grid.Column="2" Grid.Row="1" Visibility="{Binding Path=SplitTimeButtonVisible, Converter={StaticResource b2v}}" Command="{Binding StopSplitTimeCommand}" FontSize="14"/>
         </Grid>
         <TextBlock Text="{Binding RunningStopTime}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="100" Padding="5,5,5,5" FontSize="14"/>
-        <ScrollViewer Grid.Column="0" Grid.Row="2" MinWidth="100" MinHeight="300" MaxHeight="300" Padding="5,5,5,5" HorizontalContentAlignment="Center">
+        <ScrollViewer Grid.Column="0" Grid.Row="2" Padding="5,5,5,5" HorizontalContentAlignment="Center">
             <TextBlock Text="{Binding SplitTimes}" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="14"/>
         </ScrollViewer>
     </Grid>

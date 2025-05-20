@@ -73,7 +73,8 @@ namespace StopwatchUiWpf.ViewModels
             TimeSpan benchmarkSplitTime = _splitTimesList.OrderBy(t => t.Item1).ToList()[^1].Item1,
                      benchmarkWholeTime = _splitTimesList[^1].Item2;
             int numberWidth = _splitTimesList.Count.ToString().Length;
-            SplitTimes = string.Join('\n', _splitTimesList.Select((t, i) => $"{(i + 1).ToString().PadLeft(numberWidth, '0')}  {FormatTimeSpan(t.Item1, benchmarkSplitTime)}  {FormatTimeSpan(t.Item2, benchmarkWholeTime)}"));
+            SplitTimes = string.Join('\n', _splitTimesList.Select((t, i) => $"{(i + 1).ToString().PadLeft(numberWidth, '0')}:  {FormatTimeSpan(t.Item1, benchmarkSplitTime)} - {FormatTimeSpan(t.Item2, benchmarkWholeTime)}")
+                                                                   .Reverse());
         }
 
         [RelayCommand]
