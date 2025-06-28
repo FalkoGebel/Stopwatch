@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StopwatchUiMauiApp.Views.MainView"
+             Title="Stopwatch">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Text="Reset"
+                IsVisible="True" />
+
+            <Button Grid.Column="1" Text="Start"
+                IsVisible="True" />
+
+            <Button Grid.Column="1" Text="Pause"
+                IsVisible="False" />
+
+            <Button Grid.Column="2" Text="Split Time"
+                IsVisible="True" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
