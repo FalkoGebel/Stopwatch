@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StopwatchUiWpf.Properties {
+namespace StopwatchUiMauiApp.Resources.Texts {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace StopwatchUiWpf.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class AppRes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal AppRes() {
         }
         
         /// <summary>
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StopwatchUiWpf.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StopwatchUiMauiApp.Resources.Texts.AppRes", typeof(AppRes).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace StopwatchUiWpf.Properties {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace StopwatchUiWpf.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Pause ähnelt.
         /// </summary>
-        public static string MainView_PauseButton_Content {
+        internal static string MainView_PauseButton_Content {
             get {
                 return ResourceManager.GetString("MainView_PauseButton_Content", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace StopwatchUiWpf.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Reset ähnelt.
         /// </summary>
-        public static string MainView_ResetButton_Content {
+        internal static string MainView_ResetButton_Content {
             get {
                 return ResourceManager.GetString("MainView_ResetButton_Content", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace StopwatchUiWpf.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Split Time ähnelt.
         /// </summary>
-        public static string MainView_SplitTimeButton_Content {
+        internal static string MainView_SplitTimeButton_Content {
             get {
                 return ResourceManager.GetString("MainView_SplitTimeButton_Content", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace StopwatchUiWpf.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Start ähnelt.
         /// </summary>
-        public static string MainView_StartButton_Content {
+        internal static string MainView_StartButton_Content {
             get {
                 return ResourceManager.GetString("MainView_StartButton_Content", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace StopwatchUiWpf.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Stopwatch ähnelt.
         /// </summary>
-        public static string MainWindow_Title {
+        internal static string MainWindow_Title {
             get {
                 return ResourceManager.GetString("MainWindow_Title", resourceCulture);
             }
