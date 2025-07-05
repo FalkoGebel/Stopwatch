@@ -4,11 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:StopwatchUiMauiApp.Views"
+    xmlns:r="clr-namespace:StopwatchUiMauiApp.Resources.Texts"
     Shell.FlyoutBehavior="Disabled"
-    Title="Stopwatch">
+    Title="{x:Static r:AppRes.MainWindow_Title}">
 
     <ShellContent
-        Title="Stopwatch"
         ContentTemplate="{DataTemplate local:MainView}"
         Route="MainView" />
 
